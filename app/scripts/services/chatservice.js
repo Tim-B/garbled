@@ -1,6 +1,12 @@
 'use strict';
 
 angular.module('garbledApp')
-    .service('Chatservice', ["$firebase", "config", function Chatservice($firebase, config) {
-        return $firebase(config.fb_ref);
+    .service('Chatservice', ["$firebase", "$rootScope", function Chatservice($firebase, $rootScope) {
+        this.fb = null;
+        return {
+            init: function() {
+                this.fb = $firebase($rootScope.fb.child('chat'));
+            },
+            fb: this.fb
+        };
     }]);

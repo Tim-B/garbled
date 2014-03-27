@@ -8,7 +8,7 @@ angular.module('garbledApp', [
         'firebase',
     ])
     .value('config', {
-        'fb_ref': new Firebase('https://sweltering-fire-9426.firebaseio.com/chat')
+        'fb_ref': new Firebase('https://sweltering-fire-9426.firebaseio.com')
     })
     .config(function ($routeProvider) {
         $routeProvider
@@ -16,9 +16,17 @@ angular.module('garbledApp', [
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
+            .when('/chat/:contactId', {
+                templateUrl: 'views/main.html',
+                controller: 'MainCtrl'
+            })
             .when('/login', {
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
+            })
+            .when('/add', {
+                templateUrl: 'views/add.html',
+                controller: 'AddCtrl'
             })
             .when('/logout', {
                 templateUrl: 'views/login.html',
@@ -38,11 +46,7 @@ angular.module('garbledApp', [
         $rootScope.user = null;
         $rootScope.$on("logged-in", function (user) {
             $rootScope.user = user;
-            $rootScope.notify.log('You have been logged in.');
             topbar.hide();
-            console.log("Before path");
-            $location.path("/");
-            console.log("After path");
         });
         $rootScope.$on("login-error", function (error) {
             $rootScope.notify.log('Login failed');
@@ -50,20 +54,8 @@ angular.module('garbledApp', [
         });
         $rootScope.$on("logged-out", function () {
             topbar.hide();
-            $location.path("/login");
-        });
-        /*
-        // register listener to watch route changes
-        $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
-            if ($rootScope.user == null) {
-                // no logged user, we should be going to #login
-                if (next.templateUrl != "views/login.html" && next.templateUrl != "views/register.html") {
-                    $rootScope.notify.log('You must log in first.');
-                    $location.path("/login");
-                }
+            if ($location.path() != "/login" && $location.path() != "/register") {
+                $location.path("/login");
             }
-
         });
-         */
     });

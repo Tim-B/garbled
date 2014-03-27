@@ -36,7 +36,7 @@
             <li ng-show="user == null"><a ng-href="#/register">Register</a></li>
             <li ng-show="user == null"><a href="#/login">Log In</a></li>
             <li ng-hide="user == null"><a href="#/logout">Log Out</a></li>
-            <li ng-hide="user == null"><a href="#">Add Friend</a></li>
+            <li ng-hide="user == null"><a href="#/add">Add Contact</a></li>
             <li ng-hide="user == null"><a href="#">Generate Friend Token</a></li>
         </ul>
     </div>
@@ -94,6 +94,9 @@
 <script src="scripts/services/storagelogin.js"></script>
 <script src="scripts/controllers/login.js"></script>
 <script src="scripts/controllers/logout.js"></script>
+<script src="scripts/services/identityservice.js"></script>
+<script src="scripts/controllers/add.js"></script>
+<script src="scripts/services/contactservice.js"></script>
 <!-- endbuild -->
 </body>
 </html>

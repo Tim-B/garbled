@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('MainCtrl', function ($scope, config, Chatservice, $timeout) {
+    .controller('MainCtrl', function ($scope, config, Chatservice, Contactservice, $timeout) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -10,7 +10,9 @@ angular.module('garbledApp')
 
         $scope.user = "Fred Frog " + Math.round(Math.random() * 101);
         $scope.newMessage = "";
-        $scope.messages = Chatservice;
+        $scope.messages = Chatservice.fb;
+        $scope.contacts = Contactservice.fb;
+        console.log($scope.contacts);
 
         config.fb_ref.on('child_added', function (childSnapshot, prevChildName) {
             $timeout(function () {

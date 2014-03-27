@@ -15,5 +15,10 @@ angular.module('garbledApp')
                 password: $scope.storagePass,
                 rememberMe: true
             });
+
+            $rootScope.$on("logged-in", function (user) {
+                $location.path("/");
+                $rootScope.notify.log('You have been logged in.');
+            });
         }
     });
