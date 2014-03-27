@@ -13,10 +13,16 @@
         </div>
     </div>
     <div class="col-md-9">
+
         <h3>Messages</h3>
-        <div ng-repeat="message in messages" class="panel panel-default">
-            <div class="panel-body">
-                {{message.from}}: {{message.message}}
+
+        <div class="row">
+            <div class="message-container">
+                <div ng-repeat="message in messages" class="panel panel-default">
+                    <div class="panel-body">
+                        {{message.from}}: {{message.message}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -28,7 +34,7 @@
         </div>
         <div class="col-md-9">
             <form class="navbar-form navbar-lef" role="form">
-                <div class="form-group">
+                <div class="form-group message-bar">
                     <input type="text" class="form-control" ng-model="newMessage" placeholder="Message">
                 </div>
                 <button type="submit" ng-click="submitMessage()" class="btn btn-default">Send</button>
