@@ -24,6 +24,10 @@ angular.module('garbledApp', [
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
+            .when('/invite', {
+                templateUrl: 'views/invite.html',
+                controller: 'InviteCtrl'
+            })
             .when('/add', {
                 templateUrl: 'views/add.html',
                 controller: 'AddCtrl'
@@ -42,6 +46,7 @@ angular.module('garbledApp', [
     })
     .run(function ($rootScope, $location, Storagelogin) {
         topbar.show();
+        console.log(forge.util.encode64('foobar world'));
         $rootScope.notify = humane.create({ timeout: 4000, baseCls: 'humane-flatty' });
         $rootScope.user = null;
         $rootScope.$on("logged-in", function (user) {

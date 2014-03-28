@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .service('Storagelogin', ["$rootScope", "$firebase", "Chatservice", "Identityservice", "Contactservice",
-        function Storagelogin($rootScope, $firebase, Chatservice, Identityservice, Contactservice) {
+    .service('Storagelogin', ["$rootScope", "$firebase", "Chatservice", "Identityservice", "Contactservice", "Inboxservice",
+        function Storagelogin($rootScope, $firebase, Chatservice, Identityservice, Contactservice, Inboxservice) {
             $rootScope.fb = new Firebase("https://sweltering-fire-9426.firebaseio.com/");
             $rootScope.fbRoot = $rootScope.fb;
             this.auth = new FirebaseSimpleLogin($rootScope.fb, function (error, user) {
@@ -13,6 +13,7 @@ angular.module('garbledApp')
                     Chatservice.init();
                     Identityservice.init();
                     Contactservice.init();
+                    Inboxservice.init();
                     $rootScope.$emit("logged-in", user);
                 } else {
                     $rootScope.$emit("logged-out");

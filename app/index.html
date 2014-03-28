@@ -37,7 +37,7 @@
             <li ng-show="user == null"><a href="#/login">Log In</a></li>
             <li ng-hide="user == null"><a href="#/logout">Log Out</a></li>
             <li ng-hide="user == null"><a href="#/add">Add Contact</a></li>
-            <li ng-hide="user == null"><a href="#">Generate Friend Token</a></li>
+            <li ng-hide="user == null"><a href="#/invite">Invite Contact</a></li>
         </ul>
     </div>
 </nav>
@@ -85,6 +85,11 @@
 
 <script src="bower_components/humane-js/humane.min.js"></script>
 <script src="bower_components/topbar/topbar.min.js"></script>
+<script src="bower_components/crypto-js-evanvosberg/build/components/core-min.js"></script>
+<script src="bower_components/crypto-js-evanvosberg/build/rollups/sha3.js"></script>
+<script src="bower_components/crypto-js-evanvosberg/build/components/enc-base64-min.js"></script>
+<script src="bower_components/crypto-js-evanvosberg/build/components/enc-utf16-min.js"></script>
+<script src="scripts/forge.min.js"></script>
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
@@ -97,6 +102,8 @@
 <script src="scripts/services/identityservice.js"></script>
 <script src="scripts/controllers/add.js"></script>
 <script src="scripts/services/contactservice.js"></script>
+<script src="scripts/controllers/invite.js"></script>
+<script src="scripts/services/inboxservice.js"></script>
 <!-- endbuild -->
 </body>
 </html>

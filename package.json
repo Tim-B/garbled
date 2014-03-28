@@ -1,6 +1,6 @@
 {
   "name": "garbled",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -26,12 +26,16 @@
     "grunt-svgmin": "~0.2.0",
     "grunt-usemin": "~2.0.0",
     "jshint-stylish": "~0.1.3",
+    "node-forge": "~0.2.35",
+    "grunt-execute": "~0.1.5",
     "load-grunt-tasks": "~0.2.0",
     "time-grunt": "~0.2.1",
     "karma-ng-scenario": "~0.1.0",
     "grunt-karma": "~0.8.2",
     "karma": "~0.12.1",
-    "karma-ng-html2js-preprocessor": "~0.1.0"
+    "karma-ng-html2js-preprocessor": "~0.1.0",
+    "grunt-requirejs": "~0.4.1",
+    "grunt-contrib-requirejs": "~0.4.3"
   },
   "engines": {
     "node": ">=0.8.0"

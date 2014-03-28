@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('MainCtrl', function ($scope, config, Chatservice, Contactservice, $timeout) {
+    .controller('MainCtrl', function ($scope, config, Chatservice, Contactservice, $timeout, Inboxservice) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
+
 
         $scope.user = "Fred Frog " + Math.round(Math.random() * 101);
         $scope.newMessage = "";

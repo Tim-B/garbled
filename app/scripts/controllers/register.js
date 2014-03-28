@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('RegisterCtrl', function ($scope, $rootScope, config, Chatservice, Storagelogin, Identityservice) {
+    .controller('RegisterCtrl', function ($scope, $rootScope, config, Chatservice, Storagelogin, Identityservice, Inboxservice) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -19,7 +19,8 @@ angular.module('garbledApp')
                             rememberMe: true
                         });
                         $rootScope.$on("logged-in", function (user) {
-                            Identityservice.fb.$set({displayName: $scope.displayName});
+                            var inbox = Inboxservice.fb.$getRef().toString();
+                            Identityservice.fb.$set({displayName: $scope.displayName, inbox: inbox});
                             $rootScope.notify.log('Registration Successful');
                         });
                     }
