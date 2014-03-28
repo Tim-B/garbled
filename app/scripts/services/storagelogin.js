@@ -10,7 +10,6 @@ angular.module('garbledApp')
                     $rootScope.$emit("login-error", error);
                 } else if (user) {
                     $rootScope.fb = $rootScope.fbRoot.child(user.uid);
-                    Chatservice.init();
                     Identityservice.init();
                     Contactservice.init();
                     Inboxservice.init();

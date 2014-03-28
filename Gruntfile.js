@@ -288,7 +288,7 @@ module.exports = function (grunt) {
                         endFile: 'node_modules/node-forge/end.frag'
                     },
                     preserveLicenseComments: false,
-                    out: ".tmp/scripts/forge.min.js"
+                    out: ".tmp/forge/forge.min.js"
                 }
             }
         },
@@ -332,6 +332,12 @@ module.exports = function (grunt) {
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
             },
+            forgeworkers: {
+                expand: true,
+                cwd: 'node_modules/node-forge/js',
+                dest: '.tmp/forge/',
+                src: ['*.worker.js', 'jsbn.js']
+            }
         },
 
         // Run some tasks in parallel to speed up the build process
@@ -393,6 +399,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'requirejs:buildforge',
+            'copy:forgeworkers',
             'bower-install',
             'concurrent:server',
             'autoprefixer',
@@ -417,6 +424,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'requirejs:buildforge',
+        'copy:forgeworkers',
         'bower-install',
         'useminPrepare',
         'concurrent:dist',

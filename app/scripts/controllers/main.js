@@ -8,23 +8,25 @@ angular.module('garbledApp')
             'Karma'
         ];
 
-
-        $scope.user = "Fred Frog " + Math.round(Math.random() * 101);
-        $scope.newMessage = "";
-        $scope.messages = Chatservice.fb;
         $scope.contacts = Contactservice.fb;
-        console.log($scope.contacts);
+        $scope.chat = null;
 
         config.fb_ref.on('child_added', function (childSnapshot, prevChildName) {
             $timeout(function () {
                 var objDiv = document.getElementById("message-container");
                 objDiv.scrollTop = objDiv.scrollHeight + 60;
-                console.log("New");
             });
         });
 
+        $scope.loadChat = function(contact) {
+            $scope.chat = Chatservice.getChat($scope.contacts.$child(contact));
+        }
+
         $scope.submitMessage = function () {
-            $scope.messages.$add({from: $scope.user, message: $scope.newMessage});
+            var message = {from: "Me", message: $scope.newMessage};
+            console.log($scope.chat);
+            $scope.chat.messages.$add(message);
+            $scope.chat.inbox.$add(message);
             $scope.newMessage = "";
         }
     });

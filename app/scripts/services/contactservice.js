@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('garbledApp')
-    .service('Contactservice', function Identityservice($firebase, $rootScope) {
+    .service('Contactservice', function Contactservice($firebase, $rootScope) {
         this.fb = null;
         return {
             init: function () {

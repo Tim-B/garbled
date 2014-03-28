@@ -3,7 +3,7 @@
         <h3>Contacts</h3>
 
         <div class="list-group">
-            <a ng-repeat="(key, contact) in contacts" ng-href="#/chat/{{key}}" class="list-group-item">
+            <a ng-repeat="(key, contact) in contacts" ng-click="loadChat(key)" ng-href="#/chat/{{key}}" class="list-group-item">
                 {{contact.displayName}}
             </a>
         </div>
@@ -14,7 +14,7 @@
 
         <div class="row">
             <div id="message-container" class="message-container">
-                <div ng-repeat="message in messages" class="panel panel-default">
+                <div ng-repeat="message in chat.messages" class="panel panel-default">
                     <div class="panel-body">
                         {{message.from}}: {{message.message}}
                     </div>
