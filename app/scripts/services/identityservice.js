@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('garbledApp')
-    .service('Identityservice', function Identityservice($firebase, $rootScope, $q) {
+    .service('Identityservice', ["$firebase", "$rootScope", "$q", function Identityservice($firebase, $rootScope, $q) {
         this.fb = null;
         this.deffered = $q.defer();
         var service = this;
@@ -15,4 +15,4 @@ angular.module('garbledApp')
             fb: this.fb,
             promise: this.deffered.promise
         };
-    });
+    }]);

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('InviteCtrl', function ($scope, $rootScope, Identityservice) {
+    .controller('InviteCtrl', ["$scope", "$rootScope", "Identityservice",
+        function ($scope, $rootScope, Identityservice) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -33,4 +34,4 @@ angular.module('garbledApp')
 
         $scope.generateToken();
 
-    });
+    }]);

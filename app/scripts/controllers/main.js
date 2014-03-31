@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('MainCtrl', function ($scope, config, Chatservice, Contactservice, $timeout, Inboxservice, Identityservice) {
+    .controller('MainCtrl', ["$scope", "config", "Chatservice", "Contactservice", "$timeout", "Inboxservice", "Identityservice",
+        function ($scope, config, Chatservice, Contactservice, $timeout, Inboxservice, Identityservice) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -27,4 +28,4 @@ angular.module('garbledApp')
             $scope.chat.inbox.$add(message);
             $scope.newMessage = "";
         }
-    });
+    }]);

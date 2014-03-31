@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('LogoutCtrl', function ($scope, $rootScope, $location, config, Storagelogin) {
+    .controller('LogoutCtrl', ["$scope", "$rootScope", "$location", "config", "Storagelogin",
+        function ($scope, $rootScope, $location, config, Storagelogin) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -12,4 +13,4 @@ angular.module('garbledApp')
         Storagelogin.auth.logout();
         $rootScope.notify.log('You have been logged out.');
         $rootScope.user = null;
-    });
+    }]);

@@ -323,7 +323,13 @@ module.exports = function (grunt) {
                         cwd: '.tmp/scripts',
                         dest: '<%= yeoman.dist %>/scripts',
                         src: ['*']
-                    }
+                    },
+                    {
+                        expand: true,
+                        cwd: '.tmp/forge',
+                        dest: '<%= yeoman.dist %>/forge',
+                        src: ['*']
+                    },
                 ]
             },
             styles: {

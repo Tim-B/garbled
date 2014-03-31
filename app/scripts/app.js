@@ -10,7 +10,7 @@ angular.module('garbledApp', [
     .value('config', {
         'fb_ref': new Firebase('https://sweltering-fire-9426.firebaseio.com')
     })
-    .config(function ($routeProvider) {
+    .config(["$routeProvider", function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -70,8 +70,8 @@ angular.module('garbledApp', [
             .otherwise({
                 redirectTo: '/'
             });
-    })
-    .run(function ($rootScope, $location) {
+    }])
+    .run(["$rootScope", "$location", function ($rootScope, $location) {
         topbar.show();
         $rootScope.notify = humane.create({ timeout: 4000, baseCls: 'humane-flatty' });
         $rootScope.user = null;
@@ -89,4 +89,4 @@ angular.module('garbledApp', [
                 $location.path("/login");
             }
         });
-    });
+    }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('garbledApp')
-    .service('Contactservice', function Contactservice($firebase, $rootScope, $q) {
+    .service('Contactservice', ["$firebase", "$rootScope", "$q", function Contactservice($firebase, $rootScope, $q) {
         this.fb = null;
         this.deffered = $q.defer();
         var service = this;
@@ -29,4 +29,4 @@ angular.module('garbledApp')
             fb: this.fb,
             promise: this.deffered.promise
         };
-    });
+    }]);

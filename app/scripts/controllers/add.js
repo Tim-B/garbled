@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('AddCtrl', function ($scope, Contactservice, $rootScope, $http) {
+    .controller('AddCtrl', ["$scope", "Contactservice", "$rootScope", "$http",
+        function ($scope, Contactservice, $rootScope, $http) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -40,4 +41,4 @@ angular.module('garbledApp')
                 topbar.hide();
             }
         }
-    });
+    }]);
