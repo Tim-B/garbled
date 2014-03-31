@@ -31,15 +31,15 @@ angular.module('garbledApp', [
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl',
                 resolve: {
-                    login: function (Storagelogin) {
+                    login: ["Storagelogin", function (Storagelogin) {
 
-                    },
-                    identity: function (Identityservice) {
+                    }],
+                    identity: ["Identityservice", function (Identityservice) {
                         return Identityservice.promise;
-                    },
-                    contacts: function (Contactservice) {
+                    }],
+                    contacts: ["Contactservice", function (Contactservice) {
                         return Contactservice.promise;
-                    }
+                    }]
                 }
             })
             .when('/login', {
@@ -50,9 +50,9 @@ angular.module('garbledApp', [
                 templateUrl: 'views/invite.html',
                 controller: 'InviteCtrl',
                 resolve: {
-                    identity: function (Identityservice) {
+                    identity: ["Identityservice", function (Identityservice) {
                         return Identityservice.promise;
-                    }
+                    }]
                 }
             })
             .when('/add', {
