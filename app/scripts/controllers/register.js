@@ -3,11 +3,6 @@
 angular.module('garbledApp')
     .controller('RegisterCtrl', ["$scope", "$rootScope", "config", "Chatservice", "Storagelogin", "Identityservice", "Inboxservice", "$firebase",
         function ($scope, $rootScope, config, Chatservice, Storagelogin, Identityservice, Inboxservice, $firebase) {
-            $scope.awesomeThings = [
-                'HTML5 Boilerplate',
-                'AngularJS',
-                'Karma'
-            ];
 
             $scope.register = function () {
                 topbar.show();
@@ -49,4 +44,5 @@ angular.module('garbledApp')
                     }
                 );
             }
+
         }]);
