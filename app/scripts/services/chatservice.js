@@ -5,7 +5,6 @@ angular.module('garbledApp')
         this.fb = null;
         return {
             getChat: function(contact) {
-                console.log(contact);
                 return {
                     contact: contact,
                     messages: contact.$child('messages'),

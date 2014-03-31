@@ -14,11 +14,33 @@ angular.module('garbledApp', [
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                resolve: {
+                    login: function (Storagelogin) {
+
+                    },
+                    identity: function (Identityservice) {
+                        return Identityservice.promise;
+                    },
+                    contacts: function (Contactservice) {
+                        return Contactservice.promise;
+                    }
+                }
             })
             .when('/chat/:contactId', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                resolve: {
+                    login: function (Storagelogin) {
+
+                    },
+                    identity: function (Identityservice) {
+                        return Identityservice.promise;
+                    },
+                    contacts: function (Contactservice) {
+                        return Contactservice.promise;
+                    }
+                }
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
@@ -26,7 +48,12 @@ angular.module('garbledApp', [
             })
             .when('/invite', {
                 templateUrl: 'views/invite.html',
-                controller: 'InviteCtrl'
+                controller: 'InviteCtrl',
+                resolve: {
+                    identity: function (Identityservice) {
+                        return Identityservice.promise;
+                    }
+                }
             })
             .when('/add', {
                 templateUrl: 'views/add.html',
@@ -44,9 +71,8 @@ angular.module('garbledApp', [
                 redirectTo: '/'
             });
     })
-    .run(function ($rootScope, $location, Storagelogin) {
+    .run(function ($rootScope, $location) {
         topbar.show();
-        console.log(forge.util.encode64('foobar world'));
         $rootScope.notify = humane.create({ timeout: 4000, baseCls: 'humane-flatty' });
         $rootScope.user = null;
         $rootScope.$on("logged-in", function (user) {

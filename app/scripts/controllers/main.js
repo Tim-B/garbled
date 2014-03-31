@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('MainCtrl', function ($scope, config, Chatservice, Contactservice, $timeout, Inboxservice) {
+    .controller('MainCtrl', function ($scope, config, Chatservice, Contactservice, $timeout, Inboxservice, Identityservice) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -11,20 +11,18 @@ angular.module('garbledApp')
         $scope.contacts = Contactservice.fb;
         $scope.chat = null;
 
-        config.fb_ref.on('child_added', function (childSnapshot, prevChildName) {
-            $timeout(function () {
-                var objDiv = document.getElementById("message-container");
-                objDiv.scrollTop = objDiv.scrollHeight + 60;
-            });
-        });
-
-        $scope.loadChat = function(contact) {
+        $scope.loadChat = function (contact) {
             $scope.chat = Chatservice.getChat($scope.contacts.$child(contact));
+            $scope.chat.messages.$on('child_added', function (childSnapshot, prevChildName) {
+                $timeout(function () {
+                    var objDiv = document.getElementById("message-container");
+                    objDiv.scrollTop = objDiv.scrollHeight + 60;
+                });
+            });
         }
 
         $scope.submitMessage = function () {
-            var message = {from: "Me", message: $scope.newMessage};
-            console.log($scope.chat);
+            var message = {from: Identityservice.fb.displayName, message: $scope.newMessage};
             $scope.chat.messages.$add(message);
             $scope.chat.inbox.$add(message);
             $scope.newMessage = "";

@@ -31,10 +31,6 @@ angular.module('garbledApp')
             $scope.token = forge.util.encode64(tokenJson);
         }
 
-        $rootScope.$on("logged-in", function (user) {
-            Identityservice.fb.$on("loaded", function () {
-                $scope.generateToken();
-            });
-        });
+        $scope.generateToken();
 
     });
