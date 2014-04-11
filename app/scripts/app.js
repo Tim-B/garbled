@@ -50,14 +50,31 @@ angular.module('garbledApp', [
                 templateUrl: 'views/invite.html',
                 controller: 'InviteCtrl',
                 resolve: {
+                    login: ["Storagelogin", function (Storagelogin) {
+
+                    }],
                     identity: ["Identityservice", function (Identityservice) {
                         return Identityservice.promise;
+                    }],
+                    contacts: ["Contactservice", function (Contactservice) {
+                        return Contactservice.promise;
                     }]
                 }
             })
             .when('/add', {
                 templateUrl: 'views/add.html',
-                controller: 'AddCtrl'
+                controller: 'AddCtrl',
+                resolve: {
+                    login: ["Storagelogin", function (Storagelogin) {
+
+                    }],
+                    identity: ["Identityservice", function (Identityservice) {
+                        return Identityservice.promise;
+                    }],
+                    contacts: ["Contactservice", function (Contactservice) {
+                        return Contactservice.promise;
+                    }]
+                }
             })
             .when('/logout', {
                 templateUrl: 'views/login.html',

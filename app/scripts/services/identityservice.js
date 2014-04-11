@@ -5,14 +5,24 @@ angular.module('garbledApp')
         this.fb = null;
         this.deffered = $q.defer();
         var service = this;
-        return {
-            init: function () {
-                this.fb = $firebase($rootScope.fb.child('identity'));
-                this.fb.$on("loaded", function() {
-                    service.deffered.resolve();
-                });
-            },
-            fb: this.fb,
-            promise: this.deffered.promise
+        this.publicKey = null;
+        this.fingerPrint = null;
+
+        this.init = function () {
+            service.fb = $firebase($rootScope.fb.child('identity'));
+            service.fb.$on("loaded", function () {
+                service.publicKey = service.fb.publicKey;
+                var md = forge.md.sha256.create();
+                md.update(service.publicKey);
+                service.fingerPrint = md.digest().toHex();
+                service.deffered.resolve();
+            });
         };
+        this.getFingerPrint = function () {
+            return service.fingerPrint;
+        };
+        this.getPublicKey = function () {
+            return service.publicKey;
+        };
+        this.promise = this.deffered.promise
     }]);

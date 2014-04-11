@@ -18,12 +18,12 @@ angular.module('garbledApp')
                 keys.forEach(function (key, i) {
                     var message = service.fb.$child(key);
                     message.$on('loaded', function () {
-                        var contact = Contactservice.findByName(message.from);
+                        var contact = Contactservice.findByFingerPrint(message.fingerPrint);
                         var chatMessage = Chatservice.getChat(contact).messages.$child(key);
 
                         chatMessage.$transaction(function (chatMessage) {
                             return {
-                                from: message.from,
+                                from: contact.displayName,
                                 message: message.message
                             };
                         }).then(function (snapshot) {

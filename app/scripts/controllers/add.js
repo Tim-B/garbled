@@ -22,10 +22,16 @@ angular.module('garbledApp')
                             var hash = md.digest().toHex();
                             if (hash == tokenObject.hash) {
                                 var identityData = angular.fromJson(data);
+                                md = forge.md.sha256.create();
+                                md.update(identityData.publicKey);
+                                var fingerPrint = md.digest().toHex();
+                                console.log(identityData.publicKey);
+                                console.log(fingerPrint);
                                 var contact = {
                                     displayName: identityData.displayName,
                                     inbox: identityData.inbox,
-                                    publicKey: identityData.publicKey
+                                    publicKey: identityData.publicKey,
+                                    fingerPrint: fingerPrint
                                 };
                                 Contactservice.fb.$add(contact);
                                 $rootScope.notify.log('Contact ' + contact.displayName + ' added.');

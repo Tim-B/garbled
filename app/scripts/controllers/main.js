@@ -18,9 +18,12 @@ angular.module('garbledApp')
             }
 
             $scope.submitMessage = function () {
-                var message = {from: Identityservice.fb.displayName, message: $scope.newMessage};
-                $scope.chat.messages.$add(message);
-                $scope.chat.inbox.$add(message);
+                var myMessage = {from: Identityservice.fb.displayName, message: $scope.newMessage};
+                var theirMessage = {fingerPrint: Identityservice.getFingerPrint(), message: $scope.newMessage};
+                console.log(Identityservice.getPublicKey());
+                console.log(Identityservice.getFingerPrint());
+                $scope.chat.messages.$add(myMessage);
+                $scope.chat.inbox.$add(theirMessage);
                 $scope.newMessage = "";
             }
 
