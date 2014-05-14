@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('RegisterCtrl', ["$scope", "$rootScope", "config", "Chatservice", "Storagelogin", "Identityservice", "Inboxservice", "$firebase",
-        function ($scope, $rootScope, config, Chatservice, Storagelogin, Identityservice, Inboxservice, $firebase) {
+    .controller('RegisterCtrl', ["$scope", "$rootScope", "config", "Chatservice", "Storagelogin", "Identityservice", "Inboxservice", "localStorageService", "$firebase",
+        function ($scope, $rootScope, config, Chatservice, Storagelogin, Identityservice, Inboxservice, localStorageService, $firebase) {
 
             $scope.register = function () {
                 topbar.show();
@@ -26,8 +26,35 @@ angular.module('garbledApp')
                                             var pem = forge.pki.publicKeyToPem(keypair.publicKey);
                                             console.log(pem);
                                             var inbox = Inboxservice.fb.$getRef().toString();
-                                            $firebase($rootScope.fb).$set({privateKey: forge.pki.privateKeyToPem(keypair.privateKey)});
+
+
+                                            var masterKey = forge.random.getBytesSync(32);
+                                            var deviceKey = forge.random.getBytesSync(32);
+
+                                            console.log("master");
+                                            console.log(masterKey);
+                                            console.log(deviceKey);
+                                            console.log($scope.encryptionPass);
+
+                                            var md = forge.md.sha256.create();
+                                            md.update($scope.encryptionPass);
+                                            var passwordHash = md.digest();
+                                            var hashBytes = passwordHash.getBytes();
+                                            console.log(hashBytes);
+
+                                            var encryptedMaster = $rootScope.xor(32, masterKey, deviceKey, hashBytes);
+                                            console.log(encryptedMaster);
+
+                                            var original = $rootScope.xor(32, encryptedMaster, deviceKey, hashBytes);
+                                            console.log("original");
+                                            console.log(original);
+
+                                            // var
+                                            localStorageService.set('device-key', deviceKey);
+
+                                            $firebase($rootScope.fb).$set({privateKey: forge.pki.privateKeyToPem(keypair.privateKey), masterKey: encryptedMaster});
                                             Identityservice.fb.$set({displayName: $scope.displayName, inbox: inbox, publicKey: pem});
+
                                             $rootScope.notify.log('Registration Successful');
                                         }
                                         else {

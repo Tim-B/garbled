@@ -5,6 +5,7 @@ angular.module('garbledApp', [
         'ngResource',
         'ngSanitize',
         'ngRoute',
+        'LocalStorageModule',
         'firebase',
     ])
     .value('config', {
@@ -106,4 +107,11 @@ angular.module('garbledApp', [
                 $location.path("/login");
             }
         });
+        $rootScope.xor = function (length, val1, val2, val3) {
+            var out = '';
+            for (var i = 0; i < length; i++) {
+                out += String.fromCharCode(val1.charCodeAt(i) ^ val2.charCodeAt(i) ^ val3.charCodeAt(i));
+            }
+            return out;
+        }
     }]);
