@@ -18,13 +18,15 @@ angular.module('garbledApp')
                 keys.forEach(function (key, i) {
                     var message = service.fb.$child(key);
                     message.$on('loaded', function () {
-                        var contact = Contactservice.findByFingerPrint(message.fingerPrint);
-                        var chatMessage = Chatservice.getChat(contact).messages.$child(key);
 
-                        var messageKey = Keyservice.privateKeyDecrypt(chatMessage.key);
-                        var iv = chatMessage.iv;
-                        var messageJSON = Keyservice.decrypt(chatMessage.message, iv, messageKey);
-                        console.log(messageJSON);
+
+                        var messageKey = Keyservice.privateKeyDecrypt(message.key);
+                        var iv = message.iv;
+                        var messageJSON = Keyservice.decrypt(message.message, iv, messageKey);
+                        var messageObject = JSON.parse(messageJSON);
+
+                        var contact = Contactservice.findByFingerPrint(messageObject.fingerPrint);
+                        var chatMessage = Chatservice.getChat(contact).messages.$child(key);
 
                         chatMessage.$transaction(function (chatMessage) {
 
@@ -33,7 +35,7 @@ angular.module('garbledApp')
                             return {
                                 from: contact.displayName,
                                 iv: iv,
-                                message: Keyservice.encrypt(message.message, iv)
+                                message: Keyservice.encrypt(messageObject.message, iv)
                             };
 
                         }).then(function (snapshot) {
