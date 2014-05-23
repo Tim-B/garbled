@@ -20,6 +20,9 @@ angular.module('garbledApp', [
                     login: ["Storagelogin", function (Storagelogin) {
 
                     }],
+                    key: ["Keyservice", function (Keyservice) {
+                        return Keyservice.promise;
+                    }],
                     identity: ["Identityservice", function (Identityservice) {
                         return Identityservice.promise;
                     }],
@@ -34,6 +37,9 @@ angular.module('garbledApp', [
                 resolve: {
                     login: ["Storagelogin", function (Storagelogin) {
 
+                    }],
+                    key: ["Keyservice", function (Keyservice) {
+                        return Keyservice.promise;
                     }],
                     identity: ["Identityservice", function (Identityservice) {
                         return Identityservice.promise;
@@ -54,6 +60,9 @@ angular.module('garbledApp', [
                     login: ["Storagelogin", function (Storagelogin) {
 
                     }],
+                    key: ["Keyservice", function (Keyservice) {
+                        return Keyservice.promise;
+                    }],
                     identity: ["Identityservice", function (Identityservice) {
                         return Identityservice.promise;
                     }],
@@ -68,6 +77,9 @@ angular.module('garbledApp', [
                 resolve: {
                     login: ["Storagelogin", function (Storagelogin) {
 
+                    }],
+                    key: ["Keyservice", function (Keyservice) {
+                        return Keyservice.promise;
                     }],
                     identity: ["Identityservice", function (Identityservice) {
                         return Identityservice.promise;
@@ -91,6 +103,15 @@ angular.module('garbledApp', [
     }])
     .run(["$rootScope", "$location", function ($rootScope, $location) {
         topbar.show();
+
+        $rootScope.xor = function (length, val1, val2, val3) {
+            var out = '';
+            for (var i = 0; i < length; i++) {
+                out += String.fromCharCode(val1.charCodeAt(i) ^ val2.charCodeAt(i) ^ val3.charCodeAt(i));
+            }
+            return out;
+        }
+
         $rootScope.notify = humane.create({ timeout: 4000, baseCls: 'humane-flatty' });
         $rootScope.user = null;
         $rootScope.$on("logged-in", function (user) {
@@ -107,11 +128,4 @@ angular.module('garbledApp', [
                 $location.path("/login");
             }
         });
-        $rootScope.xor = function (length, val1, val2, val3) {
-            var out = '';
-            for (var i = 0; i < length; i++) {
-                out += String.fromCharCode(val1.charCodeAt(i) ^ val2.charCodeAt(i) ^ val3.charCodeAt(i));
-            }
-            return out;
-        }
     }]);

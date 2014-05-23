@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .service('Storagelogin', ["$rootScope", "$firebase", "Chatservice", "Identityservice", "Contactservice", "Inboxservice", "$q",
-        function Storagelogin($rootScope, $firebase, Chatservice, Identityservice, Contactservice, Inboxservice, $q) {
+    .service('Storagelogin', ["$rootScope", "$firebase", "Chatservice", "Identityservice", "Contactservice", "Inboxservice", "Keyservice", "$q",
+        function Storagelogin($rootScope, $firebase, Chatservice, Identityservice, Contactservice, Inboxservice, Keyservice, $q) {
             this.defer = $q.defer();
             var service = this;
             $rootScope.fb = new Firebase("https://sweltering-fire-9426.firebaseio.com/");
@@ -13,6 +13,7 @@ angular.module('garbledApp')
                 } else if (user) {
                     $rootScope.fb = $rootScope.fbRoot.child(user.uid);
                     Identityservice.init();
+                    Keyservice.init();
                     Contactservice.init();
                     Inboxservice.init();
                     $rootScope.$emit("logged-in", user);

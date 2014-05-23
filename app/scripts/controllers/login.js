@@ -11,6 +11,15 @@ angular.module('garbledApp')
 
             $scope.login = function () {
                 topbar.show();
+
+                var md = forge.md.sha256.create();
+                md.update($scope.encryptPass);
+                var passwordHash = md.digest();
+                var hashBytes = passwordHash.getBytes();
+
+                $rootScope.userKey = hashBytes;
+                console.log("User key: " + $rootScope.userKey);
+
                 Storagelogin.auth.login('password', {
                     email: $scope.storageUser,
                     password: $scope.storagePass,

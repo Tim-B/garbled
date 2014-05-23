@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .service('Inboxservice', ["$firebase", "$rootScope", "Contactservice", "Chatservice",
-        function Inboxservice($firebase, $rootScope, Contactservice, Chatservice) {
+    .service('Inboxservice', ["$firebase", "$rootScope", "Contactservice", "Chatservice", "Keyservice",
+        function Inboxservice($firebase, $rootScope, Contactservice, Chatservice, Keyservice) {
             var service = this;
             service.fb = null;
             this.init = function () {
@@ -21,11 +21,21 @@ angular.module('garbledApp')
                         var contact = Contactservice.findByFingerPrint(message.fingerPrint);
                         var chatMessage = Chatservice.getChat(contact).messages.$child(key);
 
+                        var messageKey = Keyservice.privateKeyDecrypt(chatMessage.key);
+                        var iv = chatMessage.iv;
+                        var messageJSON = Keyservice.decrypt(chatMessage.message, iv, messageKey);
+                        console.log(messageJSON);
+
                         chatMessage.$transaction(function (chatMessage) {
+
+                            var iv = forge.random.getBytesSync(16);
+
                             return {
                                 from: contact.displayName,
-                                message: message.message
+                                iv: iv,
+                                message: Keyservice.encrypt(message.message, iv)
                             };
+
                         }).then(function (snapshot) {
                                 if (snapshot) {
                                     service.fb.$remove(key);

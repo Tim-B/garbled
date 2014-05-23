@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('MainCtrl', ["$scope", "config", "Chatservice", "Contactservice", "$timeout", "Inboxservice", "Identityservice",
-        function ($scope, config, Chatservice, Contactservice, $timeout, Inboxservice, Identityservice) {
+    .controller('MainCtrl', ["$scope", "config", "Chatservice", "Contactservice", "$timeout", "Inboxservice", "Identityservice", "Keyservice",
+        function ($scope, config, Chatservice, Contactservice, $timeout, Inboxservice, Identityservice, Keyservice) {
 
             $scope.contacts = Contactservice.fb;
             $scope.chat = null;
@@ -18,13 +18,13 @@ angular.module('garbledApp')
             }
 
             $scope.submitMessage = function () {
-                var myMessage = {from: Identityservice.fb.displayName, message: $scope.newMessage};
-                var theirMessage = {fingerPrint: Identityservice.getFingerPrint(), message: $scope.newMessage};
-                console.log(Identityservice.getPublicKey());
-                console.log(Identityservice.getFingerPrint());
-                $scope.chat.messages.$add(myMessage);
-                $scope.chat.inbox.$add(theirMessage);
+                $scope.chat.sendMessage($scope.newMessage);
                 $scope.newMessage = "";
+            }
+
+            $scope.decryptItem = function (message) {
+                var dec = Keyservice.decrypt(message.message, message.iv);
+                return dec;
             }
 
         }]);
