@@ -34,6 +34,7 @@ angular.module('garbledApp')
                 });
 
                 $rootScope.$on("logged-in", function (user) {
+                    topbar.hide();
                     $location.path("/");
                     $rootScope.notify.log('You have been logged in.');
                 });

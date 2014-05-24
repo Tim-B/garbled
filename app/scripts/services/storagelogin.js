@@ -23,16 +23,6 @@ angular.module('garbledApp')
                 if (error) {
                     $rootScope.$emit("login-error", error);
                 } else if (user) {
-
-                    if($rootScope.userKey == undefined) {
-                        $rootScope.notify.log('No user key available, please log in again.');
-                        service.auth.logout();
-                        $rootScope.user = null;
-                        $rootScope.$emit("logged-out");
-                        $location.path('/login').replace();
-                        return;
-                    }
-
                     $rootScope.fb = $rootScope.fbRoot.child(user.uid);
                     if (!service.skipInit) {
                         service.init(user);

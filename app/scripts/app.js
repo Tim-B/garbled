@@ -101,8 +101,7 @@ angular.module('garbledApp', [
                 redirectTo: '/'
             });
     }])
-    .run(["$rootScope", "$location", function ($rootScope, $location) {
-        topbar.show();
+    .run(["$rootScope", "$location", "Storagelogin", function ($rootScope, $location, Storagelogin) {
 
         $rootScope.xor = function (length, val1, val2, val3) {
             var out = '';
@@ -115,7 +114,16 @@ angular.module('garbledApp', [
         $rootScope.notify = humane.create({ timeout: 4000, baseCls: 'humane-flatty' });
         $rootScope.user = null;
         $rootScope.$on("logged-in", function (user) {
+
             $rootScope.user = user;
+
+            var route = $location.path();
+
+            if (route != '/login' && route != '/register' && $rootScope.userKey == undefined) {
+                console.log('force logout');
+                topbar.hide();
+                Storagelogin.auth.logout();
+            }
             topbar.hide();
         });
         $rootScope.$on("login-error", function (error) {
