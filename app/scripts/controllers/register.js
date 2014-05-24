@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('RegisterCtrl', ["$scope", "$rootScope", "config", "Chatservice", "Storagelogin", "Identityservice", "Inboxservice", "localStorageService", "$firebase", "Keyservice",
-        function ($scope, $rootScope, config, Chatservice, Storagelogin, Identityservice, Inboxservice, localStorageService, $firebase, Keyservice) {
+    .controller('RegisterCtrl', ["$scope", "$rootScope", "config", "Chatservice", "Storagelogin", "Identityservice", "Inboxservice", "localStorageService", "$firebase", "Keyservice", "Contactservice", "$location",
+        function ($scope, $rootScope, config, Chatservice, Storagelogin, Identityservice, Inboxservice, localStorageService, $firebase, Keyservice, Contactservice, $location) {
 
             $scope.register = function () {
                 topbar.show();
                 var fb_instance = new Firebase($scope.storageHost);
+                Storagelogin.skipInit = true;
                 var auth = Storagelogin.auth;
                 auth.createUser($scope.storageUser, $scope.storagePass, function (error, user) {
                         if (!error) {
@@ -25,6 +26,9 @@ angular.module('garbledApp')
                                             console.log(keypair);
                                             var pem = forge.pki.publicKeyToPem(keypair.publicKey);
                                             console.log(pem);
+
+                                            Inboxservice.init();
+
                                             var inbox = Inboxservice.fb.$getRef().toString();
 
                                             var masterKey = forge.random.getBytesSync(32);
@@ -62,9 +66,23 @@ angular.module('garbledApp')
                                                 masterKey: encryptedMaster,
                                                 iv: iv
                                             });
-                                            Identityservice.fb.$set({displayName: $scope.displayName, inbox: inbox, publicKey: pem});
+
+
+                                            $firebase($rootScope.fb.child('identity')).$set({
+                                                displayName: $scope.displayName,
+                                                inbox: inbox,
+                                                publicKey: pem}
+                                            );
+
+                                            $rootScope.userKey = hashBytes;
+
+                                            Identityservice.init();
+                                            Keyservice.init();
+                                            Contactservice.init();
 
                                             $rootScope.notify.log('Registration Successful');
+
+                                            $location.path('/').replace();
                                         }
                                         else {
                                             $rootScope.notify.log('There was an error: ' + error.message);

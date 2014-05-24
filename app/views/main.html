@@ -14,6 +14,9 @@
 
         <div class="row">
             <div id="message-container" class="message-container">
+                <div class="alert alert-warning" ng-hide="chat != null">
+                    No conversation selected.
+                </div>
                 <div ng-repeat="message in chat.messages" class="panel panel-default">
                     <div class="panel-body">
                         {{message.from}}: {{decryptItem(message)}}
@@ -29,7 +32,7 @@
 
         </div>
         <div class="col-md-9">
-            <form class="navbar-form navbar-lef" role="form">
+            <form class="navbar-form navbar-lef" role="form" ng-hide="chat == null">
                 <div class="form-group message-bar">
                     <input type="text" class="form-control" ng-model="newMessage" placeholder="Message">
                 </div>
