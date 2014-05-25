@@ -119,11 +119,13 @@ angular.module('garbledApp', [
 
             var route = $location.path();
 
+            /*
             if (route != '/login' && route != '/register' && $rootScope.userKey == undefined) {
                 console.log('force logout');
                 topbar.hide();
                 Storagelogin.auth.logout();
             }
+            */
             topbar.hide();
         });
         $rootScope.$on("login-error", function (error) {
