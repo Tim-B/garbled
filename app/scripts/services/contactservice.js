@@ -11,18 +11,6 @@ angular.module('garbledApp')
                 service.deffered.resolve();
             });
         };
-        this.findByName = function (name) {
-            var fb = this.fb;
-            var keys = fb.$getIndex();
-            var returnVal = null;
-            keys.forEach(function (key, i) {
-                var contact = fb.$child(key);
-                if (contact.displayName == name) {
-                    returnVal = contact;
-                }
-            });
-            return returnVal;
-        };
         this.findByFingerPrint = function (fingerprint) {
             var fb = this.fb;
             var keys = fb.$getIndex();

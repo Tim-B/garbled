@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('garbledApp')
-    .controller('AddCtrl', ["$scope", "Contactservice", "$rootScope", "$http",
-        function ($scope, Contactservice, $rootScope, $http) {
+    .controller('AddCtrl', ["$scope", "Contactservice", "$rootScope", "$http", "Keyservice",
+        function ($scope, Contactservice, $rootScope, $http, Keyservice) {
             $scope.awesomeThings = [
                 'HTML5 Boilerplate',
                 'AngularJS',
@@ -27,14 +27,25 @@ angular.module('garbledApp')
                                 var fingerPrint = md.digest().toHex();
                                 console.log(identityData.publicKey);
                                 console.log(fingerPrint);
-                                var contact = {
+                                var identity = {
                                     displayName: identityData.displayName,
                                     inbox: identityData.inbox,
                                     publicKey: identityData.publicKey,
+                                };
+
+                                var iv = forge.random.getBytesSync(16);
+
+                                var identityJSON = JSON.stringify(identity);
+                                var encIdentity = Keyservice.encrypt(identityJSON, iv);
+
+                                var contact = {
+                                    iv: iv,
+                                    identity: encIdentity,
                                     fingerPrint: fingerPrint
                                 };
+
                                 Contactservice.fb.$add(contact);
-                                $rootScope.notify.log('Contact ' + contact.displayName + ' added.');
+                                $rootScope.notify.log('Contact ' + identityData.displayName + ' added.');
                                 $scope.token = '';
                                 topbar.hide();
                             } else {

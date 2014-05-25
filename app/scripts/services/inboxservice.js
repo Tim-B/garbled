@@ -32,10 +32,17 @@ angular.module('garbledApp')
 
                             var iv = forge.random.getBytesSync(16);
 
+                            var json = Keyservice.decrypt(contact.identity, contact.iv);
+                            var identity = JSON.parse(json);
+
+                            var messageParcel = {from: identity.displayName, message: messageObject.message};
+                            var messageJson = JSON.stringify(messageParcel);
+                            var encMessage = Keyservice.encrypt(messageJson, iv);
+
+
                             return {
-                                from: contact.displayName,
                                 iv: iv,
-                                message: Keyservice.encrypt(messageObject.message, iv)
+                                message: encMessage
                             };
 
                         }).then(function (snapshot) {

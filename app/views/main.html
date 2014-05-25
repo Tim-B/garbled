@@ -3,8 +3,8 @@
         <h3>Contacts</h3>
 
         <div class="list-group">
-            <a ng-repeat="(key, contact) in contacts" ng-click="loadChat(key)" ng-href="#/chat/{{key}}" class="list-group-item">
-                {{contact.displayName}}
+            <a ng-repeat="(key, contact) in contacts" ng-click="loadChat(key)" ng-href="#/chat/{{key}}" ng-init="contactObj = decryptContact(contact)" class="list-group-item">
+                {{contactObj.displayName}}
             </a>
         </div>
     </div>
@@ -17,9 +17,9 @@
                 <div class="alert alert-warning" ng-hide="chat != null">
                     No conversation selected.
                 </div>
-                <div ng-repeat="message in chat.messages" class="panel panel-default">
+                <div ng-repeat="message in chat.messages" class="panel panel-default" ng-init="mesObj = decryptItem(message)">
                     <div class="panel-body">
-                        {{message.from}}: {{decryptItem(message)}}
+                        {{mesObj.from}}: {{mesObj.message}}
                     </div>
                 </div>
             </div>

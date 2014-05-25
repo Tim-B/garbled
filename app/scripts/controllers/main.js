@@ -23,8 +23,16 @@ angular.module('garbledApp')
             }
 
             $scope.decryptItem = function (message) {
-                var dec = Keyservice.decrypt(message.message, message.iv);
-                return dec;
+                var json = Keyservice.decrypt(message.message, message.iv);
+                var message = JSON.parse(json);
+
+                return message;
+            }
+
+            $scope.decryptContact = function (contact) {
+                var json = Keyservice.decrypt(contact.identity, contact.iv);
+                var contact = JSON.parse(json);
+                return contact;
             }
 
         }]);
