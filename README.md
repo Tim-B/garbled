@@ -5,6 +5,7 @@ Requires bower, npm and grunt.
 To setup:
 
 npm install
+
 bower install
 
 grunt server
